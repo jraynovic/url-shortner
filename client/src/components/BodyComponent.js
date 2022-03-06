@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { Grid, Paper, TextField, Button } from "@mui/material";
 import ResultComponent from "./ResultComponent";
+import { useMutation, gql } from "@apollo/client";
+import { CREATE_LINK } from "../GraphQL/Queries";
 
 const BodyComponent = () => {
   const [url, setUrl] = useState("");
   const [slug, setSlug] = useState("");
   const [inputError, setInputError] = useState('')
+  const [results, setResults] = useState('')
+  const [createLink, {error}] = useMutation(CREATE_LINK)
+  const slugError = 'Oops... that is already taken. Try again or a new desired URL'
+  const urlError = 'Please enter a valid URL'
 
-  const submitHandler = () => {
+  const submitHandler = async() => {
       if(url){
         setInputError('')
-        console.log(`Submitted with URL:${url} Slug:${slug}`);  
+        console.log(`Submitted with URL:${url} Slug:${slug}`);
+        try{
+           const link = await createLink({variables:{url, slug}}) 
+           setResults(link.data.createLink.slug) 
+        }catch(err){
+            setInputError(slugError)
+        }
+        
       }else{
-          setInputError('Please enter a valid URL')
+          setInputError(urlError)
       }
   };
 
@@ -34,17 +47,17 @@ const BodyComponent = () => {
                 <h1>Lets make a short url!</h1>
               </Grid>
               <Grid item xs={12} md={4}>
-                <TextField  error={inputError} variant="outlined" label="URL" onChange={(e)=>setUrl(e.target.value)}/>
+                <TextField  error={inputError === urlError} variant="outlined" label="URL" onChange={(e)=>setUrl(e.target.value)}/>
               </Grid>
               <Grid item xs={12} md={4} style={{ textAlign: "left" }}>
-                <TextField variant="outlined" label="Optional desired url" onChange={(e)=>setSlug(e.target.value)}/>
+                <TextField error={inputError === slugError} variant="outlined" label="Optional desired url" onChange={(e)=>setSlug(e.target.value)}/>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Button variant="outlined" onClick={()=>submitHandler()}>Submit</Button>
               </Grid>
             </Grid>
             <Paper style={{ height: "40%", margin: 20 }}>
-              <ResultComponent inputError={inputError} />
+              <ResultComponent inputError={inputError} results={results} />
             </Paper>
           </Paper>
         </div>

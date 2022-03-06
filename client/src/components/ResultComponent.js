@@ -7,6 +7,7 @@ const ResultComponent = (props) => {
   return(
       <div>
           Result Component
+          {props.results}
       </div>
   )
 };
