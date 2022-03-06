@@ -53,10 +53,10 @@ const BodyComponent = () => {
                 <TextField error={inputError === slugError} variant="outlined" label="Optional desired url" onChange={(e)=>setSlug(e.target.value)}/>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Button variant="outlined" onClick={()=>submitHandler()}>Submit</Button>
+                <Button variant="contained" onClick={()=>submitHandler()}>Submit</Button>
               </Grid>
             </Grid>
-            <Paper style={{ height: "40%", margin: 20 }}>
+            <Paper elevation={results? 8: 2} style={{ height: "40%", margin: 20 }}>
               <ResultComponent inputError={inputError} results={results} />
             </Paper>
           </Paper>
