@@ -14,8 +14,13 @@ const BodyComponent = () => {
     "Oops... that is already taken. Try again or a new desired URL";
   const urlError = "Please enter a valid URL";
   const inputStyle = { marginTop: 8, marginBottom: 8 };
+
+  const urlValid = (url)=>{
+    const valid = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url)
+    return valid
+  }
   const submitHandler = async () => {
-    if (url) {
+    if (url && urlValid(url)) {
       setInputError("");
       console.log(`Submitted with URL:${url} Slug:${slug}`);
       try {
