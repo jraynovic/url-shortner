@@ -3,13 +3,31 @@ import { Grid, Button } from "@mui/material";
 
 const ResultComponent = (props) => {
   if (props.inputError) {
-    return <div>{props.inputError}</div>;
+    return (
+      <Grid
+        xs={12}
+        style={{
+          textAlign: "center",
+          height: "100%",
+          paddingTop: 30,
+          paddingBottom: 20,
+          color: "red",
+        }}
+      >
+        *{props.inputError}
+      </Grid>
+    );
   }
   if (props.results) {
     return (
       <Grid
         xs={12}
-        style={{ textAlign: "center", height: "100%", paddingTop: 30,paddingBottom:20 }}
+        style={{
+          textAlign: "center",
+          height: "100%",
+          paddingTop: 30,
+          paddingBottom: 20,
+        }}
       >
         <h4>New shortend link...{"  "}</h4>
         <a
@@ -22,7 +40,13 @@ const ResultComponent = (props) => {
   return (
     <Grid
       xs={12}
-      style={{ textAlign: "center", height: "100%", paddingTop: 30,paddingBottom:5, opacity:.3 }}
+      style={{
+        textAlign: "center",
+        height: "100%",
+        paddingTop: 30,
+        paddingBottom: 5,
+        opacity: 0.3,
+      }}
     >
       <h4>Results will be shown here...</h4>
     </Grid>
