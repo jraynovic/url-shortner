@@ -4,8 +4,12 @@ const Link = require('../Models/Link')
 const resolvers = {
   Query:{
     async getOneLink(parent, args){
-        console.log(args)
-        return{ url:'test get url', slug:'test get slug' } 
+        try{
+          const fineOneLink = await Link.findOne({where:{url:args.url}}) 
+          return fineOneLink  
+        }catch(err){
+            return err
+        }
     }
   },
 
