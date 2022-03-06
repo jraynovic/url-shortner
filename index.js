@@ -1,6 +1,7 @@
 const { ApolloServer } = require('apollo-server-express')
 const { typeDefs } = require('./Schema/typeDefs')
 const { resolvers } = require('./Schema/resolvers')
+const sequelize = require('./database')
 
 async function startApolloServer(typeDefs, resolvers) {
    const express = require('express')
@@ -8,6 +9,7 @@ async function startApolloServer(typeDefs, resolvers) {
 
     const port = 5001
 
+    sequelize.sync().then(()=> console.log('db ready'))
 
     const server = new ApolloServer({ typeDefs, resolvers })
 
