@@ -15,10 +15,13 @@ const BodyComponent = () => {
   const urlError = "Please enter a valid URL";
   const inputStyle = { marginTop: 8, marginBottom: 8 };
 
-  const urlValid = (url)=>{
-    const valid = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(url)
-    return valid
-  }
+  const urlValid = (url) => {
+    const valid =
+      /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(
+        url
+      );
+    return valid;
+  };
   const submitHandler = async () => {
     if (url && urlValid(url)) {
       setInputError("");
@@ -31,6 +34,13 @@ const BodyComponent = () => {
       }
     } else {
       setInputError(urlError);
+    }
+  };
+
+  const handleKeypress = (e) => {
+    console.log(e.key)
+    if (e.key === 'Enter') {
+      submitHandler();
     }
   };
 
@@ -57,6 +67,7 @@ const BodyComponent = () => {
                   variant="outlined"
                   label="URL"
                   onChange={(e) => setUrl(e.target.value)}
+                  onKeyPress={(e)=>handleKeypress(e)}
                 />
               </Grid>
               <Grid item xs={12} md={4} style={inputStyle}>
@@ -65,6 +76,8 @@ const BodyComponent = () => {
                   variant="outlined"
                   label="Optional desired url"
                   onChange={(e) => setSlug(e.target.value)}
+                  onKeyPress={(e)=>handleKeypress(e)}
+
                 />
               </Grid>
               <Grid item xs={12} md={4} style={inputStyle}>
